@@ -136,6 +136,7 @@
 	"format": " ⏻ ",
 	"on-click": "$HOME/.config/hypr/scripts/Wlogout.sh",
 	"on-click-right": "$HOME/.config/hypr/scripts/ChangeBlur.sh",
+	"on-click-middle": "nwgbar",
 	"tooltip": true,
 	"tooltip-format": "Left Click: Logout Menu\nRight Click: Change Blur",
 },
@@ -163,13 +164,16 @@
 },
 // NOTE:! This is only for Arch and Arch Based Distros  depend: pacman-contrib
 "custom/updater": {
-	"format": " {}",
-	"exec": "checkupdates | wc -l",
-	"exec-if": "[[ $(checkupdates | wc -l) ]]",
-	"interval": 15,
-	"on-click": "if command -v paru &> /dev/null; then kitty -T update paru -Syu; else kitty -T update yay -Syu; fi && notify-send 'The system has been updated'",
-	"tooltip": true,
-	"tooltip-format": "Left Click: Update System\nArch Linux Only",
+	"format": "{} {icon}",
+	"return-type": "json",
+	"format-icons": {
+		"has-updates": "󱍷",
+		"updated": "󰂪",
+	 "interval": 7200,
+	},
+	"exec-if": "which waybar-module-pacman-updates",
+	"exec": "waybar-module-pacman-updates",
+	"on-click": "foot -e update"
 },
 // Separators
 "custom/separator#dot": {
